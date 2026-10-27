@@ -4,38 +4,25 @@
 <title>Spot the Attack</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  color-scheme:light;
-  --blue:#1ecad3;
-  --blued:#128089;
-  --blk:#0e1518;
-  --bg:#eef3f3;
-  --card:#ffffff;
-  --muted:#5b6467;
-  --line:#e4eaea;
-  --green:#2e7d32;
-  --green-bg:#e8f5e9;
-  --red:#d32f2f;
-  --red-bg:#ffebee;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px)
-}
+:root{color-scheme:light;--blue:#1ecad3;--blued:#128089;--blk:#0e1518;--bg:#eef3f3;--card:#ffffff;--muted:#5b6467;--line:#e4eaea;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--bg);color:var(--blk);font-family:'Inter',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none}
 html{overflow-x:hidden}body{display:flex;justify-content:center}
 #page{width:100%;max-width:460px;min-height:100vh;padding:22px 16px 34px;display:flex;flex-direction:column;align-items:center}
-#app{width:100%;background:var(--card);border-radius:22px;box-shadow:0 18px 50px -20px rgba(14,21,24,.25);padding:26px 22px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;flex:1}
+#app{position:relative;width:100%;background:var(--card);border-radius:22px;box-shadow:0 18px 50px -20px rgba(14,21,24,.25);padding:26px 22px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;flex:1}
 .eyebrow{font:700 11px 'Inter';letter-spacing:1.2px;color:var(--blue);text-transform:uppercase}
 h1{margin:4px 0 0;font:800 30px/1.2 'Poppins';color:var(--blk)}
 h2{margin:0;font:700 17px 'Poppins';color:var(--blk)}
 .sub{font:600 13px 'Inter';color:var(--muted);margin-top:-6px}
-.notice{background:#f3f6f6;border:1.5px dashed var(--blue);border-radius:12px;padding:9px 12px;font:700 13px 'Inter';color:var(--blued);width:100%}
 .btn{font:700 15px 'Poppins';color:#fff;border:none;border-radius:14px;background:var(--c,var(--blue));width:min(100%,360px);padding:15px 10px;cursor:pointer;transition:transform .12s}
 .btn:active{transform:scale(.97)}.btn:disabled{opacity:.35;cursor:default}
 .blue{--c:var(--blue)}.dark{--c:var(--blk)}.outline{--c:transparent;color:var(--blk);border:2px solid var(--blk)}
+.langbar{position:absolute;top:14px;right:14px;display:flex;gap:4px;z-index:3}
+.langbtn{font:700 10px 'Inter';padding:5px 11px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--blk);cursor:pointer}
+.langbtn.on{background:var(--blk);color:#fff;border-color:var(--blk)}
 .emo{display:inline-block;line-height:1}
 .emo.wave{animation:ewave 1s ease-in-out infinite}
 @keyframes ewave{0%,100%{transform:rotate(0deg)}20%{transform:rotate(14deg)}40%{transform:rotate(-8deg)}60%{transform:rotate(14deg)}80%{transform:rotate(-4deg)}}
@@ -50,20 +37,19 @@ h2{margin:0;font:700 17px 'Poppins';color:var(--blk)}
 .pickcard{position:relative;cursor:pointer;border-radius:18px;transition:transform .12s}
 .pickcard:active{transform:scale(.98)}
 .pickcard .card{margin:0}
-.tag{position:absolute;top:-9px;left:14px;background:var(--muted);color:#fff;font:700 10.5px 'Inter';padding:4px 10px;border-radius:999px;z-index:2;letter-spacing:.3px}
-.tag.good{background:var(--green)}
-.tag.bad{background:var(--red)}
+.tag{position:absolute;top:-9px;left:14px;background:var(--muted);color:#fff;font:700 10px 'Inter';padding:4px 10px;border-radius:999px;z-index:2;letter-spacing:.3px}
+.tag.good{background:var(--blue)}.tag.bad{background:var(--blk)}
 .pickcard.chosen{outline:3px solid var(--blk);outline-offset:2px;border-radius:18px}
-.pickcard.chosen.good{outline-color:var(--green)}
-.pickcard.chosen.bad{outline-color:var(--red)}
+.pickcard.chosen.good{outline-color:var(--blue);animation:pickpulse .6s ease-out}
+@keyframes pickpulse{from{box-shadow:0 0 0 0 #1ecad355}to{box-shadow:0 0 0 10px #1ecad300}}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
 .opt{font:600 13px 'Inter';line-height:1.4;color:var(--blk);background:#f3f6f6;border:2px solid var(--line);border-radius:12px;padding:14px 8px;cursor:pointer}
 .opt.on{background:var(--blk);color:#fff;border-color:var(--blk)}
 .panel{width:100%;background:#f3f6f6;border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left}
 .prog{display:flex;gap:7px;justify-content:center}
 .prog span{width:9px;height:9px;border-radius:50%;background:var(--line)}
-.prog span.ok{background:var(--green)}.prog span.no{background:var(--red)}.prog span.cur{background:var(--muted)}
-.card{width:100%;background:#fff;color:var(--blk);text-align:left;padding:16px;border-radius:16px;border:1.5px solid var(--line);font:500 14px/1.5 'Inter'}
+.prog span.ok{background:var(--blue)}.prog span.no{background:var(--blk)}.prog span.cur{background:var(--muted)}
+.card{width:100%;background:#fff;color:var(--blk);text-align:left;padding:16px;border-radius:16px;border:1px solid var(--line);font:500 14px/1.5 'Inter'}
 .card h3{margin:8px 0 4px;font:700 16px 'Poppins'}.card p{margin:0 0 10px}
 .hd{display:flex;gap:10px;align-items:center}.av{width:32px;height:32px;border-radius:50%;background:#eef3f3;display:grid;place-items:center;flex:none;font-weight:700;color:var(--muted)}
 .url{background:#f3f6f6;border-radius:8px;padding:8px 10px;font-size:12.5px;word-break:break-all;margin-bottom:10px;color:var(--muted)}
@@ -71,20 +57,12 @@ h2{margin:0;font:700 17px 'Poppins';color:var(--blk)}
 .in{border:1px solid var(--line);border-radius:8px;padding:9px;color:var(--muted);margin-bottom:8px;font-weight:500}
 .cb{display:inline-block;background:var(--blue);color:#fff;border-radius:8px;padding:9px 14px;font-weight:700}
 .chip{display:inline-block;background:#f3f6f6;border:1px solid var(--line);border-radius:8px;padding:7px 12px}
-
-/* Clue highlights: Green for real indicators, Red for attack indicators */
-.card mark{background:none;color:inherit;padding:0 3px;border-radius:4px}
-.card.rev.good{border-color:var(--green)}
-.card.rev.good mark{background:var(--green-bg);outline:2px solid var(--green);color:var(--green);font-weight:700}
-.card.rev.bad{border-color:var(--red)}
-.card.rev.bad mark{background:var(--red-bg);outline:2px solid var(--red);color:var(--red);font-weight:700}
-.card.rev .cb mark{background:rgba(255,255,255,.2);outline:2px solid #fff;color:#fff}
-
-.v{font:700 15px 'Poppins'}
-.v.g{color:var(--green)}
-.v.r{color:var(--red)}
-.fl{text-align:left;font:500 13.5px/1.6 'Inter';margin:6px 0 0;padding-left:18px;color:var(--blk)}
-.fl li{margin-bottom:6px}
+.card mark{background:none;color:inherit;padding:0 2px;border-radius:4px}
+.card.rev.bad mark{background:#0e15181a;outline:2px solid var(--blk)}
+.card.rev.good mark{background:#1ecad31a;outline:2px solid var(--blue)}
+.card.rev .cb mark{color:#fff}
+.v{font:700 15px 'Poppins'}.v.g{color:var(--blued)}.v.r{color:var(--blk)}
+.fl{text-align:left;font:500 13.5px/1.6 'Inter';margin:6px 0 0;padding-left:18px;color:var(--blk)}.fl li{margin-bottom:6px}
 .big{font:800 52px 'Poppins';color:var(--blue)}
 .tier{font:600 11px 'Inter';text-align:left;padding:9px 12px;background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:6px;color:var(--muted)}
 .tier.on{background:var(--blk);color:#fff;border-color:var(--blk)}
@@ -104,153 +82,115 @@ tr.me td{background:#1ecad312}
 #ed{position:fixed;inset:0;background:rgba(14,21,24,.92);padding:16px;display:none;flex-direction:column;gap:8px;z-index:9}
 #ed textarea{flex:1;background:#101819;color:#dfeeee;border:1px solid #2a3838;border-radius:10px;font:12px ui-monospace,monospace;padding:10px}
 .hint{font:600 11px 'Inter';color:var(--muted)}
+html[dir="rtl"] body,html[dir="rtl"] h1,html[dir="rtl"] h2,html[dir="rtl"] .btn,html[dir="rtl"] .eyebrow,html[dir="rtl"] .sub,html[dir="rtl"] .v,html[dir="rtl"] .big,html[dir="rtl"] .tier,html[dir="rtl"] .nm,html[dir="rtl"] .pt,html[dir="rtl"] .tag,html[dir="rtl"] .fl,html[dir="rtl"] .card,html[dir="rtl"] .panel,html[dir="rtl"] .opt,html[dir="rtl"] .mailbar,html[dir="rtl"] .ml{font-family:'Cairo','Inter',system-ui,sans-serif}
+html[dir="rtl"] .card,html[dir="rtl"] .panel,html[dir="rtl"] .opt,html[dir="rtl"] .fl,html[dir="rtl"] .lr,html[dir="rtl"] .hint{text-align:right}
+html[dir="rtl"] .fl{padding-left:0;padding-right:18px}
+html[dir="rtl"] .langbar{right:auto;left:14px}
+html[dir="rtl"] .tag{left:auto;right:14px}
 </style></head><body>
 <div id="page"><div id="app"></div></div>
-<div id="ed"><div class="hint" style="color:#9fe9ee">EDIT PANEL — departments &amp; cards. Mark clues with {{double braces}}.</div><textarea id="ta" spellcheck="false"></textarea><div class="hint" id="msg" style="color:#9fe9ee"></div>
+<div id="ed"><div class="hint" style="color:#9fe9ee">EDIT PANEL — departments &amp; cards (English content). Mark clues with {{double braces}}.</div><textarea id="ta" spellcheck="false"></textarea><div class="hint" id="msg" style="color:#9fe9ee"></div>
 <button class="btn blue" data-a="save">SAVE</button><button class="btn dark" data-a="reset">RESET CONTENT</button><button class="btn dark" data-a="clr">CLEAR LEADERBOARD</button><button class="btn outline" style="color:#fff;border-color:#fff" data-a="close">CLOSE</button></div>
 <script>
 const DEF={depts:["HR","IT","DevOps","GRC","Cybersecurity","Finance & Accounting","Customer care","Marketing","Sales & restaurants","Supply chain & Logistics"],
 cards:[
-{real:{from:'"IT Support" <it-support@{{ananinja.com}}>',sub:'Your password expires in 7 days',body:'Your Ananinja account password will expire soon. {{You can update it anytime}} from Settings › Security on the intranet — no immediate action is required.',ok:true},
-fake:{from:'"IT Support" <it-support@{{ananiija.com}}>',sub:'Your password {{expires in 2 hours}}',body:'Your Ananinja account password will expire today. Click below to keep access to your mailbox and files.',btn:'{{Update password now}}',ok:false},
-why:['Fake sender domain: ananiija.com has an extra “i” — the real one is ananinja.com.','Urgency: a 2-hour deadline is designed to rush you, while the real notice gives you days and no button.','IT never asks for your password through an email button — go to the intranet yourself.']},
+{real:{from:'"IT Support" <it-support@{{ananinja.com}}>',sub:'Your password expires in 7 days',body:'Your Ananinja account password will expire soon. {{You can update it anytime}} from Settings \u203a Security on the intranet \u2014 no immediate action is required.',ok:true},
+fake:{from:'"IT Support" <it-support@{{ananiija}}.com>',sub:'Your password {{expires in 2 hours}}',body:'Your Ananinja account password will expire today. Click below to keep access to your mailbox and files.',btn:'{{Update password now}}',ok:false},
+why:['Fake sender domain: ananiija.com has an extra \u201ci\u201d \u2014 the real one is ananinja.com.','Urgency: a 2-hour deadline is designed to rush you, while the real notice gives you days and no button.','IT never asks for your password through an email button \u2014 go to the intranet yourself.']},
 {real:{from:'"Google" <no-reply@{{google.com}}>',to:'you@ananinja.com',date:'Today, 9:14 AM',gmail:true,sub:'Security alert: new sign-in',body:'We noticed a new sign-in to your Google Account. {{If this was you, no action is needed.}} You can review your activity anytime at myaccount.google.com.',ok:true},
-fake:{from:'"Google" <no-reply@{{go0gle.com}}>',to:'you@ananinja.com',date:'Today, 9:14 AM',gmail:true,sub:'Security alert: new sign-in',body:'We noticed a new sign-in to your account. {{If this wasn’t you, change your password to keep your account safe.}}',btn:'{{Change password}}',ok:false},
-why:['Fake sender domain: go0gle.com swaps the letter “o” for a zero — the real one is google.com.','The real alert says no action is needed; the fake one pushes you to click a password-change button.','Google never asks you to change your password from a button inside an email — go to accounts.google.com directly.']},
+fake:{from:'"Google" <no-reply@{{go0gle.com}}>',to:'you@ananinja.com',date:'Today, 9:14 AM',gmail:true,sub:'Security alert: new sign-in',body:'We noticed a new sign-in to your account. {{If this wasn\u2019t you, change your password to keep your account safe.}}',btn:'{{Change password}}',ok:false},
+why:['Fake sender domain: go0gle.com swaps the letter \u201co\u201d for a zero \u2014 the real one is google.com.','The real alert says no action is needed; the fake one pushes you to click a password-change button.','Google never asks you to change your password from a button inside an email \u2014 go to accounts.google.com directly.']},
 {real:{from:'"Finance Team" <payments@{{ananinja.com}}>',sub:'Reminder: invoice #4471 due Friday',body:'This is a reminder that invoice #4471 is due Friday. {{Bank details are unchanged}} from our last payment. Contact us anytime with questions.',att:'Invoice_4471.pdf',ok:true},
-fake:{from:'"Finance Team" <payments@{{ananiija.com}}>',sub:'New bank details for invoice #4471',body:'Please pay the attached invoice {{immediately, before close of business today}} to our {{NEW bank account}}. The old account is closed. {{Do not call, reply only by email.}}',att:'Invoice_4471.pdf',ok:false},
-why:['Fake sender domain: ananiija.com, not ananinja.com.','Urgency: “immediately, before close of business today” is designed to rush the payment through before anyone checks.','Changed bank details are the classic payment-fraud move — and “do not call” blocks you from verifying by phone.']},
-{real:{from:'"LinkedIn" <notifications-noreply@{{linkedin.com}}>',sub:'You appeared in 8 searches this week',body:'See who’s viewing your profile and grow your network. {{You can manage these emails in your LinkedIn settings.}}',ok:true},
-fake:{from:'"LinkedIn" <notifications-noreply@{{linkedln.com}}>',sub:'You appeared in 8 searches this week',body:'See who’s viewing your profile — {{view your search appearances before this report expires.}}',btn:'{{View my report}}',ok:false},
-why:['Fake sender domain: linkedln.com swaps the “i” for an “l” — the real one is linkedin.com.','The fake adds a countdown and a click-through button; the real one just points you to your own settings.','When unsure, go to linkedin.com directly instead of clicking an email link.']},
+fake:{from:'"Finance Team" <payments@{{ananiija}}.com>',sub:'New bank details for invoice #4471',body:'Please pay the attached invoice {{immediately, before close of business today}} to our {{NEW bank account}}. The old account is closed. {{Do not call, reply only by email.}}',att:'Invoice_4471.pdf',ok:false},
+why:['Fake sender domain: ananiija.com, not ananinja.com.','Urgency: \u201cimmediately, before close of business today\u201d is designed to rush the payment through before anyone checks.','Changed bank details are the classic payment-fraud move \u2014 and \u201cdo not call\u201d blocks you from verifying by phone.']},
+{real:{from:'"LinkedIn" <notifications-noreply@{{linkedin.com}}>',sub:'You appeared in 8 searches this week',body:'See who\u2019s viewing your profile and grow your network. {{You can manage these emails in your LinkedIn settings.}}',ok:true},
+fake:{from:'"LinkedIn" <notifications-noreply@{{linkedln.com}}>',sub:'You appeared in 8 searches this week',body:'See who\u2019s viewing your profile \u2014 {{view your search appearances before this report expires.}}',btn:'{{View my report}}',ok:false},
+why:['Fake sender domain: linkedln.com swaps the \u201ci\u201d for an \u201cl\u201d \u2014 the real one is linkedin.com.','The fake adds a countdown and a click-through button; the real one just points you to your own settings.','When unsure, go to linkedin.com directly instead of clicking an email link.']},
 {real:{from:'"HR Team" <hr@{{ananinja.com}}>',sub:'Updated leave policy is on the intranet',body:'The annual leave policy has been updated. {{No action is needed.}} You can read it on the intranet, and the HR team is happy to answer questions.',ok:true},
-fake:{from:'"HR Team" <hr@{{ananinja-hr.com}}>',sub:'Acknowledge the updated leave policy today',body:'The annual leave policy has changed. {{You must confirm you’ve read it by end of day}} or your leave requests may be affected.',btn:'{{Acknowledge now}}',ok:false},
+fake:{from:'"HR Team" <hr@{{ananinja-hr}}.com>',sub:'Acknowledge the updated leave policy today',body:'The annual leave policy has changed. {{You must confirm you\u2019ve read it by end of day}} or your leave requests may be affected.',btn:'{{Acknowledge now}}',ok:false},
 why:['Fake sender domain: ananinja-hr.com, not ananinja.com.','Urgency and a threat about your leave requests pressure you to click fast.','The real HR email needs no action and never threatens your leave requests.']}]};
 
+const CARDS_AR=[
+{real:{from:'"الدعم الفني" <it-support@{{ananinja.com}}>',sub:'كلمة مرورك بتنتهي بعد 7 أيام',body:'كلمة مرور حسابك في أنانينجا بتنتهي قريبًا. {{تقدر تحدّثها أي وقت}} من الإعدادات › الأمان على الإنترانت — ما فيه شي مستعجل.',ok:true},
+fake:{from:'"الدعم الفني" <it-support@{{anaiija}}.com>',sub:'كلمة مرورك {{بتنتهي خلال ساعتين}}',body:'كلمة مرور حسابك بتنتهي اليوم. اضغط تحت عشان تحافظ على وصولك لإيميلك وملفاتك.',btn:'{{حدّث كلمة المرور الحين}}',ok:false},
+why:['النطاق المزيف anaiija.com ناقصه حرف — النطاق الصح هو ananinja.com.','الاستعجال: مهلة ساعتين مصممة تخليك تتسرع، بينما الإيميل الحقيقي يعطيك أيام بدون أي زر.','الدعم الفني أبدًا ما يطلب كلمة مرورك عن طريق زر بالإيميل — روح للإنترانت بنفسك.']},
+{real:{from:'"Google" <no-reply@{{google.com}}>',to:'you@ananinja.com',date:'اليوم، 9:14 ص',gmail:true,sub:'تنبيه أمني: تسجيل دخول جديد',body:'لاحظنا تسجيل دخول جديد لحسابك في جوجل. {{إذا كنت أنت، ما تحتاج تسوي شي.}} تقدر تراجع نشاطك بأي وقت من myaccount.google.com.',ok:true},
+fake:{from:'"Google" <no-reply@{{go0gle.com}}>',to:'you@ananinja.com',date:'اليوم، 9:14 ص',gmail:true,sub:'تنبيه أمني: تسجيل دخول جديد',body:'لاحظنا تسجيل دخول جديد لحسابك. {{إذا ما كان أنت، غيّر كلمة مرورك عشان تحمي حسابك.}}',btn:'{{غيّر كلمة المرور}}',ok:false},
+why:['النطاق المزيف go0gle.com يستبدل حرف الـ"o" برقم صفر — النطاق الصح هو google.com.','الإيميل الحقيقي يقول ما فيه شي مطلوب؛ المزيف يدفعك تضغط زر تغيير كلمة المرور.','جوجل أبدًا ما تطلب تغيّر كلمة مرورك من زر داخل إيميل — روح مباشرة لـ accounts.google.com.']},
+{real:{from:'"فريق المالية" <payments@{{ananinja.com}}>',sub:'تذكير: فاتورة #4471 مستحقة الجمعة',body:'هذا تذكير إن فاتورة #4471 مستحقة يوم الجمعة. {{بيانات الحساب البنكي ما تغيّرت}} من آخر دفعة. تواصل معنا بأي وقت لو عندك سؤال.',att:'Invoice_4471.pdf',ok:true},
+fake:{from:'"فريق المالية" <payments@{{anainja}}.com>',sub:'بيانات بنكية جديدة للفاتورة #4471',body:'يرجى دفع الفاتورة المرفقة {{فورًا، قبل نهاية الدوام اليوم}} إلى حسابنا البنكي {{الجديد}}. الحساب القديم مقفول. {{لا تتصل، الرد عبر الإيميل فقط.}}',att:'Invoice_4471.pdf',ok:false},
+why:['النطاق المزيف anainja.com مو نفس ananinja.com.','الاستعجال: "فورًا، قبل نهاية الدوام اليوم" مصمم يخليك تدفع قبل لا أحد يتأكد.','تغيير البيانات البنكية حيلة احتيال مالي كلاسيكية — و"لا تتصل" يمنعك من التأكد عن طريق الهاتف.']},
+{real:{from:'"LinkedIn" <notifications-noreply@{{linkedin.com}}>',sub:'ظهرت في 8 عمليات بحث هذا الأسبوع',body:'شوف مين يزور ملفك الشخصي ووسّع شبكتك. {{تقدر تتحكم بهذي الإيميلات من إعدادات LinkedIn.}}',ok:true},
+fake:{from:'"LinkedIn" <notifications-noreply@{{linkedln.com}}>',sub:'ظهرت في 8 عمليات بحث هذا الأسبوع',body:'شوف مين يزور ملفك — {{شاهد تقرير عمليات البحث قبل لا ينتهي.}}',btn:'{{شاهد تقريري}}',ok:false},
+why:['النطاق المزيف linkedln.com يستبدل حرف الـ"i" بحرف "l" — الصح هو linkedin.com.','النسخة المزيفة تضيف عد تنازلي وزر ضغط؛ الحقيقية بس تحولك لإعداداتك.','إذا شاكك، روح مباشرة لـ linkedin.com بدل ما تضغط رابط بالإيميل.']},
+{real:{from:'"الموارد البشرية" <hr@{{ananinja.com}}>',sub:'سياسة الإجازات المحدّثة على الإنترانت',body:'تم تحديث سياسة الإجازات السنوية. {{ما فيه شي مطلوب منك.}} تقدر تقرأها على الإنترانت، وفريق الموارد البشرية جاهز لأي سؤال.',ok:true},
+fake:{from:'"الموارد البشرية" <hr@{{ananinja-hr}}.com>',sub:'أكّد استلامك لسياسة الإجازات اليوم',body:'سياسة الإجازات السنوية تغيّرت. {{لازم تأكّد إنك قريتها قبل نهاية اليوم}} وإلا طلبات إجازتك بتتأثر.',btn:'{{أكّد الحين}}',ok:false},
+why:['النطاق المزيف ananinja-hr.com مو نفس ananinja.com.','الاستعجال والتهديد بتأثر طلبات إجازتك يضغطون عليك تتصرف بسرعة.','إيميل الموارد البشرية الحقيقي ما يطلب أي إجراء وأبدًا ما يهدد إجازاتك.']}];
+
+const DEPT_AR={"HR":"موارد بشرية","IT":"تقنية معلومات","DevOps":"مطورين","GRC":"حوكمة و مخاطر","Cybersecurity":"امن سيبراني","Finance & Accounting":"مالية","Customer care":"خدمة عملاء","Marketing":"تسويق","Sales & restaurants":"مبيعات","Supply chain & Logistics":"سلاسل الامداد و لوجيستك"};
+const dLabel=d=>S.lang=='ar'?(DEPT_AR[d]||d):d;
+
+const STR={
+en:{tag:'CYBER AWARENESS MONTH',h1:'Spot the<br>Attack',sub1:'Can you tell a real email from a phishing attempt?',start:'START',board:'LEADERBOARD',team:'01 · YOUR TEAM',choose:'Choose your department',cont:'CONTINUE',emailOf:(i,n)=>`EMAIL ${i} OF ${n}`,tapReal:'Tap the email you think is REAL',emailA:'Email A',emailB:'Email B',real:'REAL \u2713',fake:'FAKE \u26a0',correct:'CORRECT · +10 POINTS',wrong:'NOT QUITE — that one was the fake',away:'\u2691 WHAT GAVE IT AWAY',next:'NEXT EMAIL',finish:'FINISH',results:'RESULTS',done:'Mission Complete',correctOf:(s,n)=>`${s} / ${n} correct`,seeBoard:'SEE LEADERBOARD',leaderboard:'Leaderboard',topTeam:t=>`Top team: ${t}`,noScores:'No scores yet',played:n=>`${n} played`,again:'PLAY AGAIN',tiers:[[50,'Phishing Expert — perfect score'],[40,'Sharp Eye'],[30,'Getting There'],[0,'Keep Practicing']],ptsLabel:(p)=>p?p+' pts — ':'Under 30 — '},
+ar:{tag:'شهر التوعية بالأمن السيبراني',h1:'اكتشف<br>الفخ \ud83e\udd77',sub1:'تقدر تفرّق بين الإيميل الحقيقي ومحاولة التصيّد؟',start:'ابدأ',board:'لوحة المتصدرين',team:'٠١ · فريقك',choose:'اختر قسمك',cont:'استمر',emailOf:(i,n)=>`إيميل ${i} من ${n}`,tapReal:'اضغط على الإيميل اللي تعتقد إنه <span style="color:#16a34a">حقيقي</span>',emailA:'إيميل أ',emailB:'إيميل ب',real:'حقيقي \u2713',fake:'مزيف \u26a0',correct:'صح! · +10 نقاط',wrong:'قريب! بس هذا كان المزيف',away:'\u2691 علامات التصيد',next:'الإيميل التالي',finish:'خلصنا',results:'النتيجة',done:'خلصت المهمة! \ud83c\udf89',correctOf:(s,n)=>`${s} من ${n} صح`,seeBoard:'لوحة المتصدرين',leaderboard:'لوحة المتصدرين',topTeam:t=>`الفريق الأول: ${t}`,noScores:'ما فيه نتائج بعد',played:n=>`${n} مرات لعب`,again:'العب مرة ثانية',tiers:[[50,'خبير تصيّد — علامة كاملة! \ud83c\udfc6'],[40,'عين حادة \ud83d\udc40'],[30,'قربت توصل'],[0,'كمّل تمرن']],ptsLabel:(p)=>p?p+' نقطة — ':'أقل من 30 — '}
+};
+
 const mem={},ld=k=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):mem[k]}catch(e){return mem[k]}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}};
-let cfg=ld('cn_cfg')||DEF,S={scr:'intro',dept:null,i:0,score:0,res:[],deck:[],ans:null},taps=0,clr=0;
+let cfg=ld('cn_cfg')||DEF,S={scr:'intro',dept:null,i:0,score:0,res:[],deck:[],ans:null,lang:ld('cn_lang')||'en'},taps=0,clr=0;
 const $=id=>document.getElementById(id),E=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'),M=s=>E(s).replace(/\{\{(.+?)\}\}/g,'<mark>$1</mark>');
+function T(){return STR[S.lang]}
+function applyDir(){document.documentElement.setAttribute('dir',S.lang=='ar'?'rtl':'ltr');document.documentElement.setAttribute('lang',S.lang)}
 
 function nj(s,w){
-const map={wave:'👋',idle:'🔍',happy:'🎉',sad:'⚠️'};
+const map={wave:'👋',idle:'🔍',happy:'🎉',sad:'😢'};
 const sz=Math.max(38,Math.min(96,Math.round(w*0.55)));
 return `<div class="emo ${s}" style="font-size:${sz}px">${map[s]||'🔍'}</div>`}
 
-function card(c,rev){
-const web=!!c.url,l=(c.from||'').replace(/[^A-Za-z]/g,'')[0]||'?';
+function langbar(){const t=T();return `<div class="langbar"><button class="langbtn ${S.lang=='en'?'on':''}" data-a="lang" data-v="en">EN</button><button class="langbtn ${S.lang=='ar'?'on':''}" data-a="lang" data-v="ar">AR</button></div>`}
+
+function card(c,rev){const web=!!c.url,l=(c.from||'').replace(/[^A-Za-z\u0600-\u06FF]/g,'')[0]||'?';
 const pal=[['#1ecad3','#128089'],['#6c5ce7','#4834d4'],['#00b894','#019875'],['#e17055','#c0462c']];
 const pi=(c.from||'').length%pal.length;
 const avatar=c.gmail?`<span class="av" style="background:#fff;border:1px solid var(--line)"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.69 28.18A13.7 13.7 0 0 1 11 24c0-1.45.25-2.86.69-4.18v-5.7H4.34A21.98 21.98 0 0 0 2 24c0 3.55.85 6.91 2.34 9.88z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.93 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg></span>`:`<span class="av" style="background:linear-gradient(135deg,${pal[pi][0]},${pal[pi][1]});color:#fff">${l}</span>`;
-const head=web?`<div class="url">${M(c.url)}</div><b style="color:#4285f4">${E(c.logo||'')}</b>`:`<div class="mailbar"><span>◀ Inbox</span><span>⋮</span></div><div class="hd">${avatar}<div><b>${M(c.from)}</b>${c.to?`<div class="ml">To: ${E(c.to)}${c.date?' · '+E(c.date):''}</div>`:''}</div></div>`;
+const toWord=S.lang=='ar'?'إلى: ':'To: ';
+const inboxWord=S.lang=='ar'?'◀ الوارد':'◀ Inbox';
+const head=web?`<div class="url">${M(c.url)}</div><b style="color:#4285f4">${E(c.logo||'')}</b>`:`<div class="mailbar"><span>${inboxWord}</span><span>⋮</span></div><div class="hd">${avatar}<div><b>${M(c.from)}</b>${c.to?`<div class="ml">${toWord}${E(c.to)}${c.date?' · '+E(c.date):''}</div>`:''}</div></div>`;
 return `<div class="card ${c.ok?'good':'bad'} ${rev?'rev':''}">`+head+`<h3>${M(c.sub)}</h3><p>${M(c.body)}</p>`+(c.fields||[]).map(f=>`<div class="in">${E(f)}</div>`).join('')+(c.att?`<span class="chip">📎 ${E(c.att)}</span>`:'')+(c.btn?`<span class="cb" style="${c.gmail?'background:#1a73e8':''}">${M(c.btn)}</span>`:'')+`</div>`}
-
 const lb=()=>ld('cn_lb')||{};
 function prog(){return `<div class="prog">`+S.deck.map((_,i)=>`<span class="${i<S.res.length?(S.res[i]?'ok':'no'):i==S.i?'cur':''}"></span>`).join('')+`</div>`}
-const tiers=[[50,'Phishing Expert — perfect score'],[40,'Sharp Eye'],[30,'Getting There'],[0,'Keep Practicing']];
-
-function render(){
-  let h='',a=$('app');
-  if(S.scr=='intro'){
-    h=`<div class="eyebrow" id="tt">CYBER AWARENESS MONTH</div>
-       <h1>Spot the<br>Real Email</h1>
-       ${nj('wave',140)}
-       <div class="sub">Compare both emails. Can you detect which one is genuine and which is an attack?</div>
-       <button class="btn blue" data-a="start">START CHALLENGE</button>
-       <button class="btn outline" data-a="board">LEADERBOARD</button>`;
-  }
-  if(S.scr=='clan'){
-    h=`<div class="eyebrow">01 · YOUR TEAM</div>
-       <h2>Choose your department</h2>
-       <div class="grid">${cfg.depts.map(d=>`<button class="opt ${S.dept==d?'on':''}" data-a="pick" data-v="${E(d)}">${E(d)}</button>`).join('')}</div>
-       <button class="btn blue" data-a="go" ${S.dept?'':'disabled'}>CONTINUE</button>`;
-  }
-  if(S.scr=='play'){
-    const c=S.deck[S.i], r=S.ans, rf=c._rf;
-    const leftKey=rf?'real':'fake', rightKey=rf?'fake':'real';
-
-    const mk=(key,label)=>{
-      const obj=c[key], isReal=(key==='real');
-      const cls=r?(isReal?'good':'bad'):'';
-      const chosen=r && r.picked==key ? (r.right ? 'chosen good' : 'chosen bad') : '';
-      const tagCls=r?(isReal?'good':'bad'):'';
-      const tagTxt=r?(isReal?'REAL ✓':'FAKE ⚠'):label;
-      const attrs=r?'':`data-a="choose" data-v="${key}"`;
-      return `<div class="pickcard ${cls} ${chosen}" ${attrs}><span class="tag ${tagCls}">${tagTxt}</span>${card(obj,!!r)}</div>`;
-    };
-
-    h=`<div class="sub">QUESTION ${S.i+1} OF ${S.deck.length}</div>
-       ${prog()}
-       ${nj(r?(r.right?'happy':'sad'):'idle',r?84:72)}
-       ${!r ? `<div class="notice">🎯 Tap the email you think is REAL</div>` : `<div class="sub" style="font-weight:700;color:var(--blk)">Review indicators below</div>`}
-       <div class="pick-wrap">${mk(leftKey,'Email A')}${mk(rightKey,'Email B')}</div>`;
-
-    if(r){
-      h+=`<div class="v ${r.right?'g':'r'}">${r.right?'CORRECT! You identified the real email. (+10 pts)':'INCORRECT — That was the attack!'}</div>
-          <div class="panel">
-            <div class="eyebrow" style="color:var(--blk)">⚑ What gave it away</div>
-            <ul class="fl">${c.why.map(w=>`<li>${E(w)}</li>`).join('')}</ul>
-          </div>
-          <button class="btn dark" data-a="next">${S.i+1<S.deck.length?'NEXT QUESTION':'SEE RESULTS'}</button>`;
-    }
-  }
-  if(S.scr=='end'){
-    const sc=S.score,t=tiers.find(t=>sc>=t[0]);
-    h=`<div class="eyebrow">RESULTS</div>
-       <h2>Mission Complete</h2>
-       ${nj(sc>=30?'happy':'sad',124)}
-       <div class="big">${sc}</div>
-       <div class="sub">${sc/10} / ${S.deck.length} correct</div>
-       <div class="btn dark" style="cursor:default">${t[1]}</div>
-       <div class="panel">${tiers.map(x=>`<div class="tier ${x==t?'on':''}">${x[0]?x[0]+' pts — ':'Under 30 — '}${x[1]}</div>`).join('')}</div>
-       <button class="btn blue" data-a="board">SEE LEADERBOARD</button>`;
-  }
-  if(S.scr=='board'){
-    const L=lb(),N=ld('cn_lb_n')||{},rows=cfg.depts.map(d=>[d,L[d]||0,N[d]||0]).sort((a,b)=>b[1]-a[1]);
-    const mx=rows[0][1];
-    h=`${nj('wave',96)}
-       <h2>Leaderboard</h2>
-       <div class="sub">${mx?'Top team: '+E(rows[0][0]):'No scores yet'}</div>
-       <div class="lb">${rows.map((r,i)=>`<div class="lr ${i<3&&r[1]?'t'+(i+1):''} ${r[0]==S.dept&&S.last?'me':''}"><span class="rk">${i+1}</span><div class="nm">${E(r[0])}${r[0]==S.dept&&S.last?'<em>YOU</em>':''}<small style="font-weight:600;color:var(--muted)"> · ${r[2]} played</small><div class="bar"><i style="width:${mx?r[1]/mx*100:0}%"></i></div></div><span class="pt">${r[1]}</span></div>`).join('')}</div>
-       <button class="btn blue" data-a="again">PLAY AGAIN</button>`;
-  }
-  if(S.scr=='admin'){
-    const L=lb();
-    h=`<h2>Admin</h2><div class="sub">Delete scores</div>
-       <div class="lb">${cfg.depts.map(d=>`<div class="lr"><div class="nm">${E(d)}</div><span class="pt">${L[d]||0}</span><button class="mini" data-a="del" data-v="${E(d)}">${S.cf==d?'SURE?':'DELETE'}</button></div>`).join('')}</div>
-       <button class="btn dark" data-a="delall">${S.cf=='*'?'TAP AGAIN TO CLEAR':'CLEAR ALL SCORES'}</button>
-       <button class="btn blue" data-a="edit">EDIT CARDS &amp; DEPARTMENTS</button>
-       <button class="btn outline" data-a="exit">EXIT ADMIN</button>`;
-  }
-  a.innerHTML=h;
-  window.scrollTo(0,0);
-}
-
+function render(){applyDir();let h='',a=$('app'),t=T();
+if(S.scr=='intro')h=langbar()+`<div class="eyebrow" id="tt">${t.tag}</div><h1>${t.h1}</h1>${nj('wave',140)}<div class="sub">${t.sub1}</div><button class="btn blue" data-a="start">${t.start}</button><button class="btn outline" data-a="board">${t.board}</button>`;
+if(S.scr=='clan')h=langbar()+`<div class="eyebrow">${t.team}</div><h2>${t.choose}</h2><div class="grid">${cfg.depts.map(d=>`<button class="opt ${S.dept==d?'on':''}" data-a="dept" data-v="${E(d)}">${E(dLabel(d))}</button>`).join('')}</div><button class="btn blue" data-a="go" ${S.dept?'':'disabled'}>${t.cont}</button>`;
+if(S.scr=='play'){const c=S.deck[S.i],r=S.ans,rf=c._rf;
+const leftKey=rf?'real':'fake',rightKey=rf?'fake':'real';
+const mk=(key,label)=>{const obj=c[key],isReal=key=='real',cls=r?(isReal?'good':'bad'):'',chosen=r&&r.picked==key?'chosen':'',tagCls=r?(isReal?'good':'bad'):'',tagTxt=r?(isReal?t.real:t.fake):label,attrs=r?'':`data-a="choose" data-v="${key}"`;return `<div class="pickcard ${cls} ${chosen}" ${attrs}><span class="tag ${tagCls}">${tagTxt}</span>${card(obj,!!r)}</div>`};
+h=langbar()+`<div class="sub">${t.emailOf(S.i+1,S.deck.length)}</div>${prog()}${nj(r?(r.right?'happy':'sad'):'idle',r?84:72)}<div class="sub" style="font-weight:700;color:var(--blk)">${r?'':t.tapReal}</div><div class="pick-wrap">${mk(leftKey,t.emailA)}${mk(rightKey,t.emailB)}</div>`;
+if(r)h+=`<div class="v ${r.right?'g':'r'}">${r.right?t.correct:t.wrong}</div><div class="panel"><div class="eyebrow">${t.away}</div><ul class="fl">${c.why.map(w=>`<li>${E(w)}</li>`).join('')}</ul></div><button class="btn dark" data-a="next">${S.i+1<S.deck.length?t.next:t.finish}</button>`}
+if(S.scr=='end'){const sc=S.score,tier=t.tiers.find(x=>sc>=x[0]);
+h=langbar()+`<div class="eyebrow">${t.results}</div><h2>${t.done}</h2>${nj(sc>=30?'happy':'sad',124)}<div class="big">${sc}</div><div class="sub">${t.correctOf(sc/10,S.deck.length)}</div><div class="btn dark" style="cursor:default">${tier[1]}</div><div class="panel">${t.tiers.map(x=>`<div class="tier ${x==tier?'on':''}">${t.ptsLabel(x[0])}${x[1]}</div>`).join('')}</div><button class="btn blue" data-a="board">${t.seeBoard}</button>`}
+if(S.scr=='board'){const L=lb(),N=ld('cn_lb_n')||{},rows=cfg.depts.map(d=>[d,L[d]||0,N[d]||0]).sort((a,b)=>b[1]-a[1]);
+const mx=rows[0][1];h=langbar()+`${nj('wave',96)}<h2>${t.leaderboard}</h2><div class="sub">${mx?t.topTeam(dLabel(rows[0][0])):t.noScores}</div><div class="lb">${rows.map((r,i)=>`<div class="lr ${i<3&&r[1]?'t'+(i+1):''} ${r[0]==S.dept&&S.last?'me':''}"><span class="rk">${i+1}</span><div class="nm">${E(dLabel(r[0]))}${r[0]==S.dept&&S.last?'<em>YOU</em>':''}<small style="font-weight:600;color:var(--muted)"> · ${t.played(r[2])}</small><div class="bar"><i style="width:${mx?r[1]/mx*100:0}%"></i></div></div><span class="pt">${r[1]}</span></div>`).join('')}</div><button class="btn blue" data-a="again">${t.again}</button>`}
+if(S.scr=='admin'){const L=lb();h=`<h2>Admin</h2><div class="sub">Delete scores</div><div class="lb">${cfg.depts.map(d=>`<div class="lr"><div class="nm">${E(d)}</div><span class="pt">${L[d]||0}</span><button class="mini" data-a="del" data-v="${E(d)}">${S.cf==d?'SURE?':'DELETE'}</button></div>`).join('')}</div><button class="btn dark" data-a="delall">${S.cf=='*'?'TAP AGAIN TO CLEAR':'CLEAR ALL SCORES'}</button><button class="btn blue" data-a="edit">EDIT CARDS &amp; DEPARTMENTS</button><button class="btn outline" data-a="exit">EXIT ADMIN</button>`}
+a.innerHTML=h;window.scrollTo(0,0)}
 function act(a,v){
-  if(a=='start'){S.scr='clan';S.dept=null}
-  else if(a=='board'){S.last=S.scr=='end';S.scr='board'}
-  else if(a=='pick')S.dept=v;
-  else if(a=='go'){S.deck=[...cfg.cards].sort(()=>Math.random()-.5).slice(0,5).map(c=>({...c,_rf:Math.random()<0.5}));Object.assign(S,{i:0,score:0,res:[],ans:null,scr:'play'})}
-  else if(a=='choose'){const right=v=='real';S.ans={right,picked:v};S.res.push(right);if(right)S.score+=10}
-  else if(a=='next'){if(S.i+1<S.deck.length){S.i++;S.ans=null}else{const L=lb();L[S.dept]=(L[S.dept]||0)+S.score;sv('cn_lb',L);const N=ld('cn_lb_n')||{};N[S.dept]=(N[S.dept]||0)+1;sv('cn_lb_n',N);S.scr='end'}}
-  else if(a=='del'){if(S.cf!=v)S.cf=v;else{const L=lb();delete L[v];sv('cn_lb',L);S.cf=null}}
-  else if(a=='delall'){if(S.cf!='*')S.cf='*';else{sv('cn_lb',{});S.cf=null}}
-  else if(a=='edit'){$('ta').value=JSON.stringify(cfg,null,1);$('ed').style.display='flex';return}
-  else if(a=='exit'){S.scr='intro';S.cf=null}
-  else if(a=='again'){S.scr='intro';S.last=false}
-  else if(a=='save'){try{const j=JSON.parse($('ta').value);if(!Array.isArray(j.depts)||!Array.isArray(j.cards))throw 0;cfg=j;sv('cn_cfg',j);$('msg').textContent='Saved.'}catch(e){$('msg').textContent='Invalid format — not saved.'}return}
-  else if(a=='reset'){cfg=DEF;sv('cn_cfg',DEF);$('ta').value=JSON.stringify(cfg,null,1);$('msg').textContent='Content reset.';return}
-  else if(a=='clr'){if(++clr<2){$('msg').textContent='Tap again to clear all scores.';return}clr=0;sv('cn_lb',{});$('msg').textContent='Leaderboard cleared.';return}
-  else if(a=='close'){$('ed').style.display='none';S.scr='admin';clr=0}
-  render();
-}
-
-document.addEventListener('click',e=>{
-  if(e.target.id=='tt'){if(++taps>=5){taps=0;S.scr='admin';render()}return}
-  const b=e.target.closest('[data-a]');
-  if(b&&!b.disabled)act(b.dataset.a,b.dataset.v);
-});
-
-if(location.hash=='#admin')S.scr='admin';
-addEventListener('hashchange',()=>{if(location.hash=='#admin'){S.scr='admin';render()}});
-render();
+if(a=='start'){S.scr='clan';S.dept=null}
+else if(a=='board'){S.last=S.scr=='end';S.scr='board'}
+else if(a=='dept')S.dept=v;
+else if(a=='lang'){S.lang=v;sv('cn_lang',v)}
+else if(a=='go'){const pool=S.lang=='ar'?CARDS_AR:cfg.cards;S.deck=[...pool].sort(()=>Math.random()-.5).slice(0,5).map(c=>({...c,_rf:Math.random()<0.5}));Object.assign(S,{i:0,score:0,res:[],ans:null,scr:'play'})}
+else if(a=='choose'){const right=v=='real';S.ans={right,picked:v};S.res.push(right);if(right)S.score+=10}
+else if(a=='next'){if(S.i+1<S.deck.length){S.i++;S.ans=null}else{const L=lb();L[S.dept]=(L[S.dept]||0)+S.score;sv('cn_lb',L);const N=ld('cn_lb_n')||{};N[S.dept]=(N[S.dept]||0)+1;sv('cn_lb_n',N);S.scr='end'}}
+else if(a=='del'){if(S.cf!=v)S.cf=v;else{const L=lb();delete L[v];sv('cn_lb',L);S.cf=null}}
+else if(a=='delall'){if(S.cf!='*')S.cf='*';else{sv('cn_lb',{});S.cf=null}}
+else if(a=='edit'){$('ta').value=JSON.stringify(cfg,null,1);$('ed').style.display='flex';return}
+else if(a=='exit'){S.scr='intro';S.cf=null}
+else if(a=='again'){S.scr='intro';S.last=false}
+else if(a=='save'){try{const j=JSON.parse($('ta').value);if(!Array.isArray(j.depts)||!Array.isArray(j.cards))throw 0;cfg=j;sv('cn_cfg',j);$('msg').textContent='Saved.'}catch(e){$('msg').textContent='Invalid format — not saved.'}return}
+else if(a=='reset'){cfg=DEF;sv('cn_cfg',DEF);$('ta').value=JSON.stringify(cfg,null,1);$('msg').textContent='Content reset.';return}
+else if(a=='clr'){if(++clr<2){$('msg').textContent='Tap again to clear all scores.';return}clr=0;sv('cn_lb',{});$('msg').textContent='Leaderboard cleared.';return}
+else if(a=='close'){$('ed').style.display='none';S.scr='admin';clr=0}
+render()}
+document.addEventListener('click',e=>{if(e.target.id=='tt'){if(++taps>=5){taps=0;S.scr='admin';render()}return}
+const b=e.target.closest('[data-a]');if(b&&!b.disabled)act(b.dataset.a,b.dataset.v)});
+if(location.hash=='#admin')S.scr='admin';addEventListener('hashchange',()=>{if(location.hash=='#admin'){S.scr='admin';render()}});render();
 </script></body></html>
