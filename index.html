@@ -103,7 +103,7 @@ html[dir="rtl"] .oin{font-family:'Cairo','Inter',system-ui,sans-serif}
 <div id="ed"><div class="hint" style="color:#9fe9ee">EDIT PANEL — departments &amp; cards (English content). Mark clues with {{double braces}}.</div><textarea id="ta" spellcheck="false"></textarea><div class="hint" id="msg" style="color:#9fe9ee"></div>
 <button class="btn blue" data-a="save">SAVE</button><button class="btn dark" data-a="reset">RESET CONTENT</button><button class="btn dark" data-a="clr">CLEAR LEADERBOARD</button><button class="btn outline" style="color:#fff;border-color:#fff" data-a="close">CLOSE</button></div>
 <script>
-const DEF={depts:["Operations","Operations - Food","Ninja Logistics","Food - Logistics","Warehouse","Customer Care","Commercial Sector","Sales - Food","Marketing","Procurement","Coffee Now","Fresh","Pharmacies","HR & Administrative Affairs","Finance","Legal","IT Department","Maintenance","Real Estate","PMO","GRC","CEO Office","Other"],
+const DEF={depts:["Operations","Operations - Food","Ninja Logistics","Food - Logistics","Warehouse","Customer Care","Commercial Sector","Sales - Food","Marketing","Procurement","Coffee Now","Fresh","Pharmacies","HR & Administrative Affairs","Finance","Legal","IT Department","Maintenance","Real Estate","PMO","GRC","CEO Office"],
 cards:[
 {real:{from:'"IT Support" <it-support@{{ananinja.com}}>',sub:'Your password expires in 7 days',body:'Your Ananinja account password will expire soon. {{You can update it anytime}} from Settings \u203a Security on the intranet \u2014 no immediate action is required.',ok:true},
 fake:{from:'"IT Support" <it-support@{{ananiija}}.com>',sub:'Your password {{expires in 2 hours}}',body:'Your Ananinja account password will expire today. Click below to keep access to your mailbox and files.',btn:'{{Update password now}}',ok:false},
@@ -138,7 +138,7 @@ why:['النطاق المزيف linkedln.com يستبدل حرف الـ"i" بح�
 fake:{from:'"الموارد البشرية" <hr@{{ananinja-hr}}.com>',sub:'أكّد استلامك لسياسة الإجازات اليوم',body:'سياسة الإجازات السنوية تغيّرت. {{لازم تأكّد إنك قريتها قبل نهاية اليوم}} وإلا طلبات إجازتك بتتأثر.',btn:'{{أكّد الحين}}',ok:false},
 why:['النطاق المزيف ananinja-hr.com مو نفس ananinja.com.','الاستعجال والتهديد بتأثر طلبات إجازتك يضغطون عليك تتصرف بسرعة.','إيميل الموارد البشرية الحقيقي ما يطلب أي إجراء وأبدًا ما يهدد إجازاتك.']}];
 
-const DEPT_AR={"Operations":"العمليات","Operations - Food":"العمليات - فود","Ninja Logistics":"نينجا لوجستكس","Food - Logistics":"فود - لوجستكس","Warehouse":"وير هاوس","Customer Care":"كستمر كير","Commercial Sector":"القطاع التجاري","Sales - Food":"المبيعات - فود","Marketing":"التسويق","Procurement":"المشتريات","Coffee Now":"ناو كوفي","Fresh":"فرشي","Pharmacies":"الصيدليات","HR & Administrative Affairs":"الموارد البشرية والشؤون الإدارية","Finance":"المالية","Legal":"ليقل","IT Department":"قسم التقنية","Maintenance":"الصيانة","Real Estate":"ريل ستيت","PMO":"PMO","GRC":"GRC","CEO Office":"مكتب الرئيس التنفيذي","Other":"أخرى"};
+const DEPT_AR={"Operations":"العمليات","Operations - Food":"العمليات - فود","Ninja Logistics":"نينجا لوجستكس","Food - Logistics":"فود - لوجستكس","Warehouse":"وير هاوس","Customer Care":"كستمر كير","Commercial Sector":"القطاع التجاري","Sales - Food":"المبيعات - فود","Marketing":"التسويق","Procurement":"المشتريات","Coffee Now":"ناو كوفي","Fresh":"فرشي","Pharmacies":"الصيدليات","HR & Administrative Affairs":"الموارد البشرية والشؤون الإدارية","Finance":"المالية","Legal":"ليقل","IT Department":"قسم التقنية","Maintenance":"الصيانة","Real Estate":"ريل ستيت","PMO":"PMO","GRC":"GRC","CEO Office":"مكتب الرئيس التنفيذي"};
 const dLabel=d=>S.lang=='ar'?(DEPT_AR[d]||d):d;
 
 const STR={
@@ -210,3 +210,4 @@ const b=e.target.closest('[data-a]');if(b&&!b.disabled)act(b.dataset.a,b.dataset
 document.addEventListener('input',e=>{if(e.target.id=='oth'){S.other=e.target.value;const g=document.querySelector('[data-a="go"]');if(g)g.disabled=!S.other.trim()}});
 if(location.hash=='#admin')S.scr='admin';addEventListener('hashchange',()=>{if(location.hash=='#admin'){S.scr='admin';render()}});render();
 </script></body></html>
+
